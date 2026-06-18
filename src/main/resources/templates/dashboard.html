@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recipe Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background: #333;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>📊 Recipe Dashboard</h1>
+
+<!-- 🍝 RECIPES -->
+<section>
+    <h2>🍝 Recipes</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Preparation Time</th>
+        </tr>
+
+        <tr th:each="r : ${recipes}">
+            <td th:text="${r.name}"></td>
+            <td th:text="${r.category}"></td>
+            <td th:text="${r.preparationTime}"></td>
+        </tr>
+    </table>
+</section>
+
+<!-- ⭐ RATINGS -->
+<section>
+    <h2>⭐ Ratings</h2>
+
+    <table>
+        <tr>
+            <th>Recipe</th>
+            <th>User</th>
+            <th>Stars</th>
+            <th>Comment</th>
+        </tr>
+
+        <tr th:each="r : ${ratings}">
+            <td th:text="${r.recipeId}"></td>
+            <td th:text="${r.username}"></td>
+            <td th:text="${r.stars}"></td>
+            <td th:text="${r.comment}"></td>
+        </tr>
+    </table>
+</section>
+
+<!-- 📊 CATEGORY STATS -->
+<section>
+    <h2>📊 Recipes per Category</h2>
+
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Count</th>
+        </tr>
+
+        <tr th:each="c : ${categories}">
+            <!-- FIX: _id ist die Kategorie -->
+            <td th:text="${c['_id']}"></td>
+            <td th:text="${c['count']}"></td>
+        </tr>
+    </table>
+</section>
+
+<!-- ⏱ PREP TIME -->
+<section>
+    <h2>⏱ Average Preparation Time</h2>
+
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Avg Time</th>
+        </tr>
+
+        <tr th:each="p : ${prepTimes}">
+            <!-- FIX: _id ist Kategorie -->
+            <td th:text="${p['_id']}"></td>
+            <td th:text="${p['avgTime']}"></td>
+        </tr>
+    </table>
+</section>
+
+<!-- ⭐ AVG RATINGS -->
+<section>
+    <h2>⭐ Average Rating per Recipe</h2>
+
+    <table>
+        <tr>
+            <th>Recipe</th>
+            <th>Avg Rating</th>
+        </tr>
+
+        <tr th:each="a : ${avgRatings}">
+            <!-- FIX: _id ist Rezept -->
+            <td th:text="${a['_id']}"></td>
+            <td th:text="${a['avgRating']}"></td>
+        </tr>
+    </table>
+</section>
+
+</body>
+</html>
