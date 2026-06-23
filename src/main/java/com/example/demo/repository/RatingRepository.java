@@ -15,17 +15,22 @@ public interface RatingRepository extends MongoRepository<Rating, String> {
     List<Rating> findByStars(int stars);
 
     @Aggregation(pipeline = {
-            "{ '$group': { '_id': '$recipeId', 'avgRating': { '$avg': '$stars' }}}"
+            "{ '$lookup': { 'from': 'recipes', 'localField': 'recipeId', 'foreignField': '_id', 'as': 'recipe' } }",
+            "{ '$unwind': '$recipe' }",
+            "{ '$group': { '_id': '$recipe.name', 'avgRating': { '$avg': '$stars' } } }"
     })
     List<Map<String, Object>> averageRatingPerRecipe();
 
     @Aggregation(pipeline = {
-            "{ '$group': { '_id': '$recipeId', 'count': { '$sum': 1 }}}"
+            "{ '$lookup': { 'from': 'recipes', 'localField': 'recipeId', 'foreignField': '_id', 'as': 'recipe' } }",
+            "{ '$unwind': '$recipe' }",
+            "{ '$group': { '_id': '$recipe.name', 'count': { '$sum': 1 } } }"
     })
     List<Map<String, Object>> ratingCountPerRecipe();
 
     @Aggregation(pipeline = {
-            "{ '$group': { '_id': '$stars', 'count': { '$sum': 1 }}}"
+            "{ '$group': { '_id': '$stars', 'count': { '$sum': 1 }}}",
+            "{ '$project': { '_id': 0, 'stars': '$_id', 'count': 1 }}"
     })
     List<Map<String, Object>> starsDistribution();
 }

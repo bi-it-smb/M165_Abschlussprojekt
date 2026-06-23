@@ -141,5 +141,39 @@
     </table>
 </section>
 
+<section>
+    <h2>⭐ Stars Distribution</h2>
+
+    <table>
+        <tr>
+            <th>Stars</th>
+            <th>Count</th>
+        </tr>
+
+        <tbody id="starsTable"></tbody>
+    </table>
+</section>
+
+
+<script>
+    fetch("/api/ratings/stats/distribution")
+        .then(response => response.json())
+        .then(data => {
+
+            let table = "";
+
+            data.forEach(s => {
+                table += `
+                <tr>
+                    <td>${s.stars} Stern(e)</td>
+                    <td>${s.count} Bewertung(en)</td>
+                </tr>
+            `;
+            });
+
+            document.getElementById("starsTable").innerHTML = table;
+        });
+</script>
+
 </body>
 </html>
