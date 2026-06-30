@@ -24,9 +24,10 @@ public interface RatingRepository extends MongoRepository<Rating, String> {
     @Aggregation(pipeline = {
             "{ '$lookup': { 'from': 'recipes', 'localField': 'recipeId', 'foreignField': '_id', 'as': 'recipe' } }",
             "{ '$unwind': '$recipe' }",
-            "{ '$group': { '_id': '$recipe.name', 'count': { '$sum': 1 } } }"
+            "{ '$group': { '_id': '$recipe.name', 'count': { '$sum': 1 } } }",
+            "{ '$project': { '_id': 0, 'recipeName': '$_id', 'count': 1 } }"
     })
-    List<Map<String, Object>> ratingCountPerRecipe();
+    List<Map<String,Object>> ratingCountPerRecipe();
 
     @Aggregation(pipeline = {
             "{ '$group': { '_id': '$stars', 'count': { '$sum': 1 }}}",

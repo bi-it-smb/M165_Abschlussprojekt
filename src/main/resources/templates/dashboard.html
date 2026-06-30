@@ -142,6 +142,22 @@
 </section>
 
 <section>
+    <h2>📝 Anzahl Bewertungen pro Rezept</h2>
+
+    <table>
+        <tr>
+            <th>Rezept</th>
+            <th>Anzahl Bewertungen</th>
+        </tr>
+
+        <tr th:each="r : ${ratingCounts}">
+            <td th:text="${r['recipeName']}"></td>
+            <td th:text="${r['count']}"></td>
+        </tr>
+    </table>
+</section>
+
+<section>
     <h2>⭐ Stars Distribution</h2>
 
     <table>

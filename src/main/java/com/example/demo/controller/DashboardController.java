@@ -30,7 +30,7 @@ public class DashboardController {
         model.addAttribute("categories", recipeService.recipesPerCategory());
         model.addAttribute("prepTimes", recipeService.averagePreparationTimeByCategory());
         model.addAttribute("avgRatings", ratingService.averageRatingPerRecipe());
-
+        model.addAttribute("ratingCounts", ratingService.ratingCountPerRecipe());
         return "dashboard";
     }
 }
